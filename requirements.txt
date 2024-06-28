@@ -4,4 +4,3 @@ vosk
 transformers
 wave
 jiwer
-csv
