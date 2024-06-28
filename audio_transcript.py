@@ -4,27 +4,34 @@ import sys
 
 import scripts.whisper_a as whisper_a
 import scripts.vosk_a as vosk_a
+import scripts.clean_audio as clean_audio
 
 # 1. Transcribe audio
 # 2. Clean audio
 
-def op(option, aux, model_number):
+def op(option, aux, model_number, dataset):
 
     if option == 1:
         if aux == "whisper":
-            audio = "cleaned_audio.wav"
-            whisper_a.whisp_transcript(audio, model_number)
+            whisper_a.whisp_transcript(dataset, model_number)
         elif aux == "vosk":
-            audio = "cleaned_audio.wav"
-            vosk_a.vosk_transcript(audio, model_number)
+            vosk_a.vosk_transcript(dataset, model_number)
+        else:
+            print("Error. No {aux} option available.")
+    elif option == 2:
+        clean_audio.data_cleaning(aux)
 
 if __name__ == "__main__": 
     if len(sys.argv) < 3:
-        print("""Option 1 - Transcribe audio with Whisper
-                 Usage: python audio_transcript.py option model""")
+        print("""Option 1 - Transcribe audio: 
+                 Usage: python audio_transcript.py option aux model_number dataset
+                 
+                 Option 2 - Clean audio:
+                 Usage: python audio_transcript.py option path_dataset 0 """)
         sys.exit(1)
 
     option = int(sys.argv[1])
     aux = str(sys.argv[2])
-    model_number = int(sys.argv[3])
-    op(option, aux, model_number)
+    aux2 = int(sys.argv[3])
+    dataset = str(sys.argv[4])
+    op(option, aux, aux2, dataset)

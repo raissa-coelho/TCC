@@ -1,12 +1,16 @@
+
 import vosk
 import wave
 import json
+
+import os
+import pandas as pd
 
 # https://alphacephei.com/vosk/models
 # model_number: 1 - vosk-model-small-pt-0.3
 # model_number: 2 - vosk-model-pt-fb-v0.1.1-20220516_2113
 
-def vosk_transcript(audio, model_number):
+def single_transcript(audio, model_number, output_txt):
     
     if model_number == 1:
         model = vosk.Model("/home/raissa/Documents/TCC/TCC/scripts/models/vosk-model-small-pt-0.3")
@@ -39,3 +43,16 @@ def vosk_transcript(audio, model_number):
     for result in results:
         if "text" in result:
             print(f'Transcript:',result["text"])
+
+def vosk_transcript(dataset, model_number):
+    output_txt = "vosk_transcript.txt"
+    # Read dataset
+    path_complete = os.path.join(os.getcwd(), "scripts/audio/", dataset)
+    df = pd.read_csv(path_complete)
+
+     # find each file in cleaned_audio folder
+    for i in range(len(df)):
+        file = df.loc[i, "file_name"]
+        input_file = os.path.join(os.getcwd(),"scripts/audio/cleaned_audio", file)
+
+        single_transcript(input_file, model_number, output_txt)

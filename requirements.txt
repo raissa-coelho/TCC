@@ -3,3 +3,5 @@ pydub
 vosk
 transformers
 wave
+jiwer
+csv
