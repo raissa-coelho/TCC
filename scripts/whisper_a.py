@@ -3,10 +3,10 @@ import sys
 import os
 import pandas as pd
 import csv
-from scripts import calcula_wer
 
 # only multilingual support
 def single_transcript(file, model_number, output_txt):
+    
     match model_number:
         case 1:
             model = whisper.load_model("tiny")
@@ -45,10 +45,6 @@ def whisp_transcript(dataset, model_number):
         file = df.loc[i, "file_name"]
 
         single_transcript(file, model_number, output_txt)
-    
-    print(f'Calculando ...')
-    # calculate WER
-    calcula_wer.wer(dataset, output_txt)
 
     #ending
     print(f'End.')

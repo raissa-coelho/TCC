@@ -5,6 +5,7 @@ import sys
 import scripts.whisper_a as whisper_a
 import scripts.vosk_a as vosk_a
 import scripts.clean_audio as clean_audio
+import scripts.calcula as calcula
 
 # 1. Transcribe audio
 # 2. Clean audio
@@ -20,14 +21,19 @@ def op(option, aux, model_number, dataset):
             print("Error. No {aux} option available.")
     elif option == 2:
         clean_audio.data_cleaning(aux)
+    elif option == 3:
+        calcula.measure(dataset, aux)
 
 if __name__ == "__main__": 
     if len(sys.argv) < 3:
         print("""Option 1 - Transcribe audio: 
-                 Usage: python audio_transcript.py option aux model_number dataset
+                 Usage: python audio_transcript.py 1 aux model_number dataset
                  
                  Option 2 - Clean audio:
-                 Usage: python audio_transcript.py option path_dataset 0 """)
+                 Usage: python audio_transcript.py 2 path_dataset 0 
+                 
+                 Option 3 - Calculate WER:
+                 Usage: python audio_transcript.py 3 aux 0 dataset """)
         sys.exit(1)
 
     option = int(sys.argv[1])
