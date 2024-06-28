@@ -1,4 +1,6 @@
 
-scripts/audio/
-scripts/models/
-scripts/results/
+scripts/audio/cleaned_audio/*.mp3
+scripts/audio/*.csv
+scripts/audio/pt/
+*.mp3
+*.wav
