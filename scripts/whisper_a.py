@@ -23,8 +23,8 @@ def single_transcript(file, model_number, output_txt):
             sys.exit(1)
 
     audio = os.path.join(os.getcwd(),"scripts/audio/cleaned_audio", file)
-    transcript = whisper.transcribe(model, audio)
-    # print(transcript["text"])
+    # Bianca
+    transcript = whisper.transcribe(model, audio, language="portuguese", fp16=False, verbose=True)
 
     out = os.path.join(os.getcwd(), "scripts/results/", output_txt)
 
@@ -46,5 +46,4 @@ def whisp_transcript(dataset, model_number):
 
         single_transcript(file, model_number, output_txt)
 
-    #ending
     print(f'End.')
