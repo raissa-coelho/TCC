@@ -2,6 +2,7 @@
 import vosk
 import wave
 import json
+import csv
 
 import os
 import pandas as pd
@@ -40,9 +41,15 @@ def single_transcript(audio, model_number, output_txt):
     f_result = json.loads(rec.FinalResult())
     results.append(f_result)
 
+    out = os.path.join(os.getcwd(),"scripts/results/", output_txt)
+    
     for result in results:
-        if "text" in result:
-            print(f'Transcript:',result["text"])
+     	if "text" in result:
+            auxx = result["text"]
+    
+    with open(out, "a", newline='', encoding='utf-8') as arq:
+        escreve = csv.writer(arq)
+        escreve.writerow([audio, auxx])
 
 def vosk_transcript(dataset, model_number):
     output_txt = "vosk_transcript.txt"
@@ -51,8 +58,8 @@ def vosk_transcript(dataset, model_number):
     df = pd.read_csv(path_complete)
 
      # find each file in cleaned_audio folder
+    print("Start...")
     for i in range(len(df)):
         file = df.loc[i, "file_name"]
-        input_file = os.path.join(os.getcwd(),"scripts/audio/cleaned_audio", file)
-
-        single_transcript(input_file, model_number, output_txt)
+        single_transcript(file, model_number, output_txt)
+    print("End...")

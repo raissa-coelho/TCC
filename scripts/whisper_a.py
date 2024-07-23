@@ -7,23 +7,22 @@ import csv
 # only multilingual support
 def single_transcript(file, model_number, output_txt):
     
-    match model_number:
-        case 1:
-            model = whisper.load_model("tiny")
-        case 2:
-            model = whisper.load_model("base")
-        case 3:
-            model = whisper.load_model("small")
-        case 4:
-            model = whisper.load_model("medium")
-        case 5:
-            model = whisper.load_model("large")
-        case _:
-            print("Invalid model number")
-            sys.exit(1)
+    if model_number == 1:
+        model = whisper.load_model("tiny")
+    elif model_number == 2:
+        model = whisper.load_model("base")
+    elif model_number == 3:
+        model = whisper.load_model("small")
+    elif model_number == 4:
+        model = whisper.load_model("medium")
+    elif model_number == 5:
+        model = whisper.load_model("large")
+    else:    
+        print("Invalid model number")
+        sys.exit(1)
 
     audio = os.path.join(os.getcwd(),"scripts/audio/cleaned_audio", file)
-    # Bianca
+
     transcript = whisper.transcribe(model, audio, language="portuguese", fp16=False, verbose=True)
 
     out = os.path.join(os.getcwd(), "scripts/results/", output_txt)

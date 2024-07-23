@@ -10,7 +10,11 @@ def measure(ground_truth, aux):
     hipotese = []
 
     if aux == "whisper":
-        hypothesis = "whisp_transcript.csv"
+        hypothesis = "whisp_transcript_small.csv"
+    elif aux == "vosk":
+        hypothesis = "vosk_transcript.csv"
+    elif aux == "facebook":
+        hypothesis = "face_transcript.csv"
 
     gt = os.path.join(os.getcwd(), "scripts/audio/", ground_truth)
     hypo = os.path.join(os.getcwd(), "scripts/results/", hypothesis)
@@ -26,6 +30,7 @@ def measure(ground_truth, aux):
             hipotese.append(linha["transcript"])
     
     transform = jiwer.Compose([jiwer.RemovePunctuation(), 
+    				            jiwer.RemoveEmptyStrings(),
                                jiwer.RemoveMultipleSpaces(),
                                jiwer.ToLowerCase(),
                                jiwer.Strip()])
@@ -61,3 +66,21 @@ def measure(ground_truth, aux):
     # Calculate CER - Character Error Reference
     cer = jiwer.cer(transform_ref, transform_hyp)
     print(f'CER: {cer} -- {cer * 100:.2f}%')
+
+    path_out = "/home/hworld/Downloads/Raissa - TCC/TCC/scripts/results/"
+    
+    output = os.path.join(path_out, "whisper_small.txt")
+    
+    wer1 = f'{wer* 100:.2f}'
+    mer1 = f'{mer* 100:.2f}'
+    wil1 = f'{wil* 100:.2f}'
+    wip1 = f'{wip* 100:.2f}'
+    cer1 = f'{cer* 100:.2f}'
+    
+    with open(output, 'w') as f:
+        f.write('Whisper Small' + '\n')
+        f.write('Wer: ' + wer1 + '%' + '\n')
+        f.write('Mer: ' + mer1 + '%' + '\n')
+        f.write('Wil: ' + wil1 + '%' + '\n')
+        f.write('Wip: ' + wip1 + '%' + '\n')
+        f.write('Cer: ' + cer1 + '%')
