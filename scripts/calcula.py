@@ -13,8 +13,6 @@ def measure(ground_truth, aux):
         hypothesis = "whisp_transcript_small.csv"
     elif aux == "vosk":
         hypothesis = "vosk_transcript.csv"
-    elif aux == "facebook":
-        hypothesis = "face_transcript.csv"
 
     gt = os.path.join(os.getcwd(), "scripts/audio/", ground_truth)
     hypo = os.path.join(os.getcwd(), "scripts/results/", hypothesis)
