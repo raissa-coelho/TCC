@@ -6,7 +6,6 @@ import scripts.whisper_a as whisper_a
 import scripts.vosk_a as vosk_a
 import scripts.clean_audio as clean_audio
 import scripts.calcula as calcula
-import scripts.facebook_a as facebook_a
 
 # 1. Transcribe audio
 # 2. Clean audio
@@ -18,8 +17,6 @@ def op(option, aux, model_number, dataset):
             whisper_a.whisp_transcript(dataset, model_number)
         elif aux == "vosk":
             vosk_a.vosk_transcript(dataset, model_number)
-        elif aux == "facebook":
-            facebook_a.face_transcript(dataset, model_number)
         else:
             print("Error. No {aux} option available.")
     elif option == 2:
